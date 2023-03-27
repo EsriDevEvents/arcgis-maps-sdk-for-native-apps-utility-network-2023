@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+             x:Class="UtilityTracer.OutagePage"
+             Title="Work Order - Outage">
+    <ContentPage.Resources>
+        <Style x:Key="TraceButtonStyle"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10" />
+            <Setter Property="CornerRadius"
+                    Value="12" />
+            <Setter Property="TextColor"
+                    Value="White" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource Primary}" />
+            <Setter Property="FontFamily"
+                    Value="Roboto" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Padding"
+                    Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                    Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                    Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                                <Setter Property="BackgroundColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="TraceButtonStyle_TEST"
+               TargetType="Button">
+            <Setter Property="Margin"
+                    Value="10" />
+            <Setter Property="CornerRadius"
+                    Value="12" />
+            <Setter Property="TextColor"
+                    Value="White" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource Primary}" />
+            <Setter Property="FontFamily"
+                    Value="Roboto" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="Padding"
+                    Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                    Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                    Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                                <Setter Property="BackgroundColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="GroupLabelStyle"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource Tertiary}" />
+            <Setter Property="FontFamily"
+                    Value="OpenSansRegular" />
+            <Setter Property="FontSize"
+                    Value="Subtitle" />
+            <Setter Property="Padding"
+                    Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                    Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                    Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="GroupLabelStyle_TEST"
+               TargetType="Label">
+            <Setter Property="BackgroundColor"
+                    Value="{StaticResource PurpleAccent}" />
+            <Setter Property="Margin"
+                    Value="2,2" />
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+            <Setter Property="FontFamily"
+                    Value="Roboto" />
+            <Setter Property="FontAttributes"
+                    Value="Bold" />
+            <Setter Property="FontSize"
+                    Value="Subtitle" />
+            <Setter Property="Padding"
+                    Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                    Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                    Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="Transparent" />
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray500}, Dark={StaticResource Gray500}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="OutageLabelKeyStyle"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="Black" />
+            <Setter Property="Margin"
+                    Value="5,0,5,0" />
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="FontFamily"
+                    Value="Roboto" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="OutageLabelValueStyle"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="Blue" />
+            <Setter Property="Margin"
+                    Value="15,0,5,0" />
+            <Setter Property="BackgroundColor"
+                    Value="Transparent" />
+            <Setter Property="FontFamily"
+                    Value="Roboto" />
+            <Setter Property="FontSize"
+                    Value="14" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="ResultLabel"
+               BasedOn="{StaticResource OutageLabelValueStyle}"
+               TargetType="Label">
+            <Setter Property="Margin"
+                    Value="5,10,5,0" />
+            <Setter Property="FontSize"
+                    Value="Body" />
+        </Style>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".475*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <esri:MapView x:Name="MyMapView"
+                      Grid.ColumnSpan="2" />
+
+        <Border BackgroundColor="#F0F0F0F0"
+                StrokeShape="RoundRectangle 0,0,0,0"
+                StrokeThickness="1">
+            <Grid x:Name="Panel"
+                  BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Load Basemap -->
+                <Button x:Name="LoadBasemap"
+                        Grid.Row="0"
+                        Text="Load Basemap"
+                        Clicked="LoadBasemapAsync"
+                        Style="{StaticResource TraceButtonStyle}" />
+
+                <!-- Load UN -->
+                <Button Text="Load Geodatabase"
+                        x:Name="LoadGdb"
+                        IsVisible="False"
+                        Grid.Row="1"
+                        Clicked="LoadUtilityNetworkAsync"
+                        Style="{StaticResource TraceButtonStyle}" />
+
+                <!-- 1 - Locate Outage -->
+                <Border Stroke="#CC0078D7"
+                        BackgroundColor="Transparent"
+                        StrokeThickness="0"
+                        Grid.Row="2">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="FindNearestTransformerAsync" />
+                    </Border.GestureRecognizers>
+                    <Grid BackgroundColor="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Text="1 - Locate Outage"
+                               x:Name="LocateOutageHeader"
+                               Style="{StaticResource GroupLabelStyle_TEST}" />
+                        <Grid Grid.Row="1"
+                              BackgroundColor="Transparent"
+                              x:Name="OutageReportGrid">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="5*" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="OutageButton"
+                                    Grid.ColumnSpan="2"
+                                    Text="Outage Work Order"
+                                    Style="{StaticResource TraceButtonStyle}"
+                                    Clicked="LoadOutageWorkOrderAsync" />
+                            <Ellipse Fill="Red"
+                                     Grid.ColumnSpan="2"
+                                     WidthRequest="30"
+                                     HeightRequest="30"
+                                     Margin="0,-35,0,0"
+                                     HorizontalOptions="End"
+                                     IsVisible="False"
+                                     x:Name="Badge" />
+                            <Label Text="1"
+                                   Grid.ColumnSpan="2"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="End"
+                                   Margin="0,5,10,0"
+                                   IsVisible="{Binding Source={x:Reference Badge}, Path=IsVisible}" />
+                            <Label Text="Asset ID:"
+                                   Grid.Row="1"
+                                   Style="{StaticResource OutageLabelKeyStyle}"
+                                   HorizontalTextAlignment="End"
+                                   Padding="10,0,0,0" />
+                            <Label x:Name="IncidentAssetId"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Style="{StaticResource OutageLabelValueStyle}"
+                                   IsVisible="{Binding Source={x:Reference IncidentAddress}, Path=IsVisible}" />
+                            <Label Text="Address:"
+                                   Grid.Row="2"
+                                   Grid.Column="0"
+                                   HorizontalTextAlignment="End"
+                                   Padding="10,0,0,0"
+                                   Style="{StaticResource OutageLabelKeyStyle}" />
+                            <Label x:Name="IncidentAddress"
+                                   Grid.Row="2"
+                                   Grid.Column="1"
+                                   IsVisible="False"
+                                   Style="{StaticResource OutageLabelValueStyle}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- 2 - Locate Protective Device -->
+                <Border Stroke="#CC0078D7"
+                        StrokeThickness="0"
+                        BackgroundColor="Transparent"
+                        Grid.Row="3"
+                        IsVisible="False"
+                        x:Name="UpstreamTrace">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnClearUpstreamTraceResults" />
+                    </Border.GestureRecognizers>
+                    <Grid BackgroundColor="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label  x:Name="UpstreamTraceLabel"
+                                Text="2 - Locate Protective Device"
+                                Style="{StaticResource GroupLabelStyle_TEST}"
+                                IsVisible="{Binding Source={x:Reference UpstreamTrace}, Path=IsVisible}" />
+                        <Button x:Name="UpstreamTraceButton"
+                                Text="Upstream Trace"
+                                Style="{StaticResource TraceButtonStyle}"
+                                Clicked="FindUpstreamSwitchAsync"
+                                Grid.Row="1"
+                                IsVisible="{Binding Source={x:Reference UpstreamTrace}, Path=IsVisible}" />
+                    </Grid>
+                </Border>
+
+                <!-- 3 - Locate Service Points -->
+                <Border Stroke="#CC0078D7"
+                        StrokeThickness="0"
+                        BackgroundColor="Transparent"
+                        Grid.Row="4"
+                        IsVisible="False"
+                        x:Name="DownstreamTrace">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnShowResults" />
+                    </Border.GestureRecognizers>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label x:Name="LocateServicePointsLabel"
+                               Text="3 - Locate Service Points"
+                               Style="{StaticResource GroupLabelStyle_TEST}"
+                               IsVisible="{Binding Source={x:Reference DownstreamTrace}, Path=IsVisible}" />
+                        <Grid x:Name="DownstreamTraceContent"
+                              Grid.Row="1"
+                              IsVisible="{Binding Source={x:Reference DownstreamTrace}, Path=IsVisible}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Button  Text="Downstream Trace"
+                                     Style="{StaticResource TraceButtonStyle}"
+                                     Clicked="FindDownstreamResidentialsAsync"
+                                     Margin="5,5,5,0" />
+                            <Label x:Name="Result"
+                                   Grid.Row="1"
+                                   IsVisible="False"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ResultLabel}" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- 4 - Save Impact Report -->
+                <Border Stroke="#CC0078D7"
+                        StrokeThickness="0"
+                        BackgroundColor="Transparent"
+                        Grid.Row="5"
+                        IsVisible="False"
+                        x:Name="SaveResults">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Text="4 - Save Impact Report"
+                               Style="{StaticResource GroupLabelStyle_TEST}" />
+                        <Grid Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Label Text="{Binding Source={x:Reference Result}, Path=Text}"
+                                   IsVisible="False"
+                                   HorizontalTextAlignment="Center"
+                                   Style="{StaticResource ResultLabel}" />
+                            <CollectionView x:Name="CustomerList"
+                                            HorizontalScrollBarVisibility="Always"
+                                            VerticalScrollBarVisibility="Always"
+                                            Grid.Row="1"
+                                            Margin="5"
+                                            IsVisible="False">
+                                <CollectionView.Header>
+                                    <Border Stroke="Black"
+                                            StrokeThickness="1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width=".5*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Text="Asset ID"
+                                                   FontFamily="Roboto"
+                                                   FontAttributes="Bold"
+                                                   Margin="5,0,5,0" />
+                                            <Label Text="Address"
+                                                   FontFamily="Roboto"
+                                                   FontAttributes="Bold"
+                                                   Margin="5,0,5,0"
+                                                   Grid.Column="1" />
+                                        </Grid>
+                                    </Border>
+                                </CollectionView.Header>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Stroke="{StaticResource Gray100}"
+                                                StrokeThickness="0.5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width=".5*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Key}"
+                                                       FontFamily="Roboto"
+                                                       Margin="5,0,5,0" />
+                                                <Label Text="{Binding Value}"
+                                                       FontFamily="Roboto"
+                                                       Margin="5,0,5,0"
+                                                       Grid.Column="1" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            <Button x:Name="SendReportToOffice"
+                                    Text="Save impact report"
+                                    Style="{StaticResource TraceButtonStyle}"
+                                    IsVisible="False"
+                                    Clicked="OnSendReport"
+                                    Grid.Row="2" />
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

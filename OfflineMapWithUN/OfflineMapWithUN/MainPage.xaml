@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+             x:Class="OfflineMapWithUN.MainPage">
+
+    <ContentPage.Resources>
+        <Style x:Key="ButtonStyle"
+               TargetType="Button">
+            <Setter Property="Margin"
+                        Value="10" />
+            <Setter Property="TextColor"
+                        Value="Black" />
+            <Setter Property="BackgroundColor"
+                        Value="#FFCCCCCC" />
+            <Setter Property="FontFamily"
+                        Value="OpenSansRegular" />
+            <Setter Property="FontSize"
+                        Value="14" />
+            <Setter Property="Padding"
+                        Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                        Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                        Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                            Value="{AppThemeBinding Light={StaticResource Gray950}, Dark={StaticResource Gray200}}" />
+                                <Setter Property="BackgroundColor"
+                                            Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <Style x:Key="GroupLabelStyle"
+               TargetType="Label">
+            <Setter Property="TextColor"
+                    Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Primary}}" />
+            <Setter Property="BackgroundColor"
+                    Value="#CC0078D7" />
+            <Setter Property="FontFamily"
+                    Value="OpenSansRegular" />
+            <Setter Property="FontSize"
+                    Value="Subtitle" />
+            <Setter Property="Padding"
+                    Value="14,10" />
+            <Setter Property="MinimumHeightRequest"
+                    Value="44" />
+            <Setter Property="MinimumWidthRequest"
+                    Value="44" />
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Disabled">
+                            <VisualState.Setters>
+                                <Setter Property="TextColor"
+                                        Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray600}}" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".4*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <!-- MapView -->
+        <esri:MapView x:Name="MapView"
+                      Grid.ColumnSpan="2"
+                      />
+
+        <!-- Left Navigation Bar -->
+        <Border Stroke="Black"
+                    StrokeThickness="0.5">
+            <Grid x:Name="Panel"
+                  BackgroundColor="#C0F0F0F0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- 1. Load Online Map -->
+                <Border Stroke="#CC0078D7"
+                        StrokeThickness="1"
+                        Grid.Row="0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Text="1 - Load Online Map"
+                                Style="{StaticResource GroupLabelStyle}" />
+                        <Button x:Name="LoadOnlineMapButton"
+                                Text="Load Map"
+                                Clicked="LoadOnlineMap"
+                                Style="{StaticResource ButtonStyle}"
+                                Grid.Row="2" />
+                    </Grid>
+                </Border>
+
+                <!-- 2. Take Offline -->
+                <Border x:Name="TakeOfflineGroup"
+                        Stroke="#CC0078D7"
+                        StrokeThickness="1"
+                        Grid.Row="1"
+                        IsVisible="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Text="2 - Take Offline"
+                               Style="{StaticResource GroupLabelStyle}" />
+                        <Button x:Name="TakeOfflineButton"
+                                Text="Take Offline"
+                                Style="{StaticResource ButtonStyle}"
+                                Clicked="TakeMapOffline"
+                                Grid.Row="2"/>
+                    </Grid>
+                </Border>
+
+                <!-- 3. Use Offline -->
+                <Border x:Name="UseOfflineGroup"
+                        Stroke="#CC0078D7"
+                        StrokeThickness="1"
+                        Grid.Row="2"
+                        IsVisible="False">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Label Text="3 - Use in the field"
+                               Style="{StaticResource GroupLabelStyle}" />
+                        <Button x:Name="ViewWorkOrderButton"
+                                Text="View Work Order"
+                                Style="{StaticResource ButtonStyle}"
+                                Clicked="ViewWorkOrder"
+                                Grid.Row="1"/>
+                        <Ellipse Fill="Red"
+                                 WidthRequest="30"
+                                 HeightRequest="30"
+                                 Margin="0,-35,0,0"
+                                 HorizontalOptions="End"
+                                 IsVisible="True"
+                                 x:Name="Badge"
+                                 Grid.Row="1" />
+                        <Label x:Name="BadgeLabel"
+                               Text="2"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="End"
+                               Margin="0,5,10,0"
+                               Grid.Row="1"
+                               IsVisible="{Binding Source={x:Reference Badge}, Path=IsVisible}" />
+                        <Button x:Name="ViewAssociationsButton"
+                                Text="View Associations"
+                                Style="{StaticResource ButtonStyle}"
+                                Clicked="ViewAssociations"
+                                Grid.Row="2" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- Loading Indicator -->
+        <Grid x:Name="LoadingIndicator"
+              Grid.RowSpan="2"
+              Grid.ColumnSpan="2"
+              BackgroundColor="#CF6E6E6E"
+              IsVisible="False">
+            <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Label x:Name="LoadingIndicatorLabel"
+                       Margin="10"
+                       FontSize="18"
+                       Text="Loading online map..."
+                       HorizontalTextAlignment="Center"
+                       TextColor="White" />
+                <ProgressBar x:Name="LoadingIndicatorProgressBar"
+                             ProgressColor="{StaticResource Secondary}"
+                             Grid.Row="1"
+                             HeightRequest="10"
+                             HorizontalOptions="Center"
+                             IsEnabled="True"
+                             VerticalOptions="Center"
+                             WidthRequest="100" />
+                <Button x:Name="CancelButton"
+                        Text="Cancel"
+                        Style="{StaticResource ButtonStyle}"
+                        Clicked="Cancel"
+                        Grid.Row="3"
+                        IsVisible="False"/>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</ContentPage>
